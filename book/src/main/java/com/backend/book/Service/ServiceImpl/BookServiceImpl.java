@@ -80,7 +80,7 @@ public class BookServiceImpl implements BookService {
 
     }
 
-    public static final String STORAGE_DIRECTORY = "D:\\1\\1\\DACN\\BE_02\\book\\Book_Cover";
+    public static final String STORAGE_DIRECTORY = "D:\\1\\1\\DACN\\BE_02\\BE_DACN\\book\\Book_Cover";
     public void updateBookCover(String id, MultipartFile cover) {
         if (cover == null) {
             throw new NullPointerException("fileToSave is null");

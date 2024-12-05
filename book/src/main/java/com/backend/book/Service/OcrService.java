@@ -25,7 +25,7 @@ import java.util.Objects;
 public class OcrService {
     private final Tesseract tesseract;
 
-    public static final String STORAGE_DIRECTORY = "D:\\1\\1\\DACN\\BE_02\\book\\Book_Page";
+    public static final String STORAGE_DIRECTORY = "D:\\1\\1\\DACN\\BE_02\\BE_DACN\\book\\Book_Page";
 
     public void saveFile(MultipartFile fileToSave) throws IOException {
         if (fileToSave == null) {
@@ -42,7 +42,7 @@ public class OcrService {
         this.tesseract = tesseract;
     }
 
-    public static final String BASEURL="D:\\1\\1\\DACN\\BE_02\\book\\Book_Page";
+    public static final String BASEURL="D:\\1\\1\\DACN\\BE_02\\BE_DACN\\book\\Book_Page";
 
     public String getImageString(MultipartFile multipartFile) throws TesseractException {
         System.out.println(multipartFile.getOriginalFilename());
