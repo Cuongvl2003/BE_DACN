@@ -9,7 +9,6 @@ import com.backend.book.Model.DTO.PageUpdateRequest;
 import com.backend.book.Model.Entity.Book;
 import com.backend.book.Service.BookService;
 
-import net.sourceforge.tess4j.TesseractException;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,32 +19,32 @@ public class BookController {
     @Autowired
     BookService bookService;
 
-    @GetMapping
+    @GetMapping("/getAllBooks")
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getBookById/{id}")
     public Optional<Book> getBookById(@PathVariable String id) {
         return bookService.getBookById(id);
     }
 
-    @GetMapping("/getBookPage{id}/{pageNumber}")
+    @GetMapping("/getBookPage/{id}/pageNumber{pageNumber}")
     public String getBookpage(@PathVariable String id, @PathVariable Long pageNumber) {
         return bookService.getBookPage(id, pageNumber);
     }
 
-    @PostMapping
+    @PostMapping("/createBook")
     public Book createBook(@RequestBody Book book) {
         return bookService.saveBook(book);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/updateBook/{id}")
     public Book updateBook(@PathVariable String id, @RequestBody Book book) {
         return bookService.updateBook(id, book);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteBook/{id}")
     public String deleteBook(@PathVariable String id) {
         bookService.deleteBook(id);
         return "Book deleted successfully!";
@@ -56,13 +55,13 @@ public class BookController {
     //     return bookService.updateBookPage2(id, page, pageNumber);
     // }
 
-    @PostMapping("/update-page")
+    @PostMapping("/update-page(NoNeedThisShit)")
     public Book updateBookPage(@RequestBody PageUpdateRequest request) {
         System.out.println(1123);
         return bookService.updateBookPage(request.getId(), request.getPage(), request.getPageNumber());
     }
 
-    @PostMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/updateBookCover{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void updateBookCover(@PathVariable String id, @RequestParam MultipartFile multipartFile) {
         bookService.updateBookCover(id, multipartFile);
     }

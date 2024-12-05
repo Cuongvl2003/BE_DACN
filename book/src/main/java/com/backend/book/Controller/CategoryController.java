@@ -14,22 +14,22 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping
+    @GetMapping("/getAllCategory")
     public List<Category> getAllCategory() {
         return categoryService.getAllCategory();
     }
 
-    @PostMapping
+    @PostMapping("/createCategory")
     public Category createCategory(@RequestBody Category category) {
         return categoryService.saveCategory(category);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/updateCategory/{id}")
     public Category updateCategory(@PathVariable String id, @RequestBody Category category) {
         return categoryService.updateCategory(id, category);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteCategory/{id}")
     public String deleteCategory(@PathVariable String id) {
         categoryService.deleteCategory(id);
         return "Category deleted successfully!";

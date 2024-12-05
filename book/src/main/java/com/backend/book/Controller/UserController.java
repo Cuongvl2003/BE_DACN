@@ -15,27 +15,27 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping
+    @GetMapping("/getAllUsers")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getUserById/{id}")
     public Optional<User> getUserById(@PathVariable String id) {
         return userService.getUserById(id);
     }
 
-    @PostMapping
+    @PostMapping("createUsers")
     public User createUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/updateUser/{id}")
     public User updateUser(@PathVariable String id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteUsers{id}")
     public String deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
         return "User deleted successfully!";
