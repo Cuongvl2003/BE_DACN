@@ -1,6 +1,8 @@
 package com.backend.book.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.backend.book.Model.Entity.User;
@@ -39,5 +41,16 @@ public class UserController {
     public String deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
         return "User deleted successfully!";
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam String userName, @RequestParam String password) {
+        User user = userService.loginAPI(userName, password);
+
+        if (user!=null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(401).body("Invalid username or password");
+        }
     }
 }

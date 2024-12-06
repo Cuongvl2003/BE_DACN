@@ -42,4 +42,9 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(id);
         return "Delete successfully";
     }
+
+    public User loginAPI(String userName, String password){
+        return userRepository.findByUserNameAndPassword(userName, password);
+    }
+
 }

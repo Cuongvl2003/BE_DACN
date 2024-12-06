@@ -11,5 +11,6 @@ public interface UserService {
     public User saveUser(User user);
     public User updateUser(String id, User user);
     public String deleteUser(String id);
+    public User loginAPI(String userName, String password);
     
 }

@@ -22,7 +22,7 @@ public class BookServiceImpl implements BookService {
     BookRepository bookRepository;
 
     public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+        return bookRepository.findAllExcludingBookPages();
     }
 
     public Optional<Book> getBookById(String id) {
