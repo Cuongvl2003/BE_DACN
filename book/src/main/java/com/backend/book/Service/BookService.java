@@ -18,4 +18,5 @@ public interface BookService {
     public Book updateBookPage(String id, String page, Long pageNumber);
    // public Book updateBookPage2(String id, MultipartFile page, Long pageNumber);
     public void updateBookCover(String id, MultipartFile cover);
+    public List<Book> getBookByTittle(String tittle);
 }

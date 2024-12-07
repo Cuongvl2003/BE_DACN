@@ -18,6 +18,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -61,24 +63,34 @@ public class OcrService {
 
     @Autowired BookRepository bookRepository;
 
-    public Book updateBookPage(String id, MultipartFile multipartFile, Long pageNumber) throws TesseractException {
+    public Book updateBookPage(String id, List<MultipartFile> multipartFile) throws TesseractException {
+        //bookRepository.save(book1);
         Book book = bookRepository.findByBookId(id);
+
         Map<Long, String> bookPages = book.getBookPages();
-
-        System.out.println(multipartFile.getOriginalFilename());
-        final String orginalFileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        System.out.println("2222");
-        Path filePath = Paths.get(BASEURL+"\\"+orginalFileName);
-        System.out.println(filePath);
-        try{
-            this.saveFile(multipartFile);
+        if (bookPages == null) {
+            bookPages = new HashMap<>();
         }
-        catch (Exception e){};
-        final String orcToString = tesseract.doOCR(new File(String.valueOf(filePath)));
-        System.out.println(orcToString);
+        Long count=1L;
+        for (MultipartFile page: multipartFile){
 
-        bookPages.put(pageNumber, orcToString);
-        book.setBookPages(bookPages);
+            System.out.println(page.getOriginalFilename());
+            final String orginalFileName = StringUtils.cleanPath(page.getOriginalFilename());
+            System.out.println("2222");
+            Path filePath = Paths.get(BASEURL+"\\"+orginalFileName);
+            System.out.println(filePath);
+            try{
+                this.saveFile(page);
+            }
+            catch (Exception e){};
+            final String orcToString = tesseract.doOCR(new File(String.valueOf(filePath)));
+            System.out.println(orcToString);
+
+            bookPages.put(count, orcToString);
+            count++;
+        }
+        System.out.println("test123");
+            book.setBookPages(bookPages);
         return bookRepository.save(book);
     }
 

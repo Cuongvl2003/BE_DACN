@@ -65,5 +65,10 @@ public class BookController {
     public void updateBookCover(@PathVariable String id, @RequestParam MultipartFile multipartFile) {
         bookService.updateBookCover(id, multipartFile);
     }
+
+    @GetMapping("/getBookByTittle/{tittle}")
+    public List<Book> getBookByTittle(@PathVariable String tittle) {
+        return bookService.getBookByTittle(tittle);
+    }
 }
 

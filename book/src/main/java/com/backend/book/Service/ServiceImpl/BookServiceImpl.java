@@ -87,7 +87,7 @@ public class BookServiceImpl implements BookService {
         }
         Book book=bookRepository.findByBookId(id);
 
-        var targetFile = new File(STORAGE_DIRECTORY + File.separator + id);
+        var targetFile = new File(STORAGE_DIRECTORY + File.separator + id+".PNG");
         if (!Objects.equals(targetFile.getParent(), STORAGE_DIRECTORY)) {
             throw new SecurityException("Unsupported filename!");
         }
@@ -96,8 +96,14 @@ public class BookServiceImpl implements BookService {
         }
         catch (Exception e){};
         book.setBookCover(targetFile.getPath());
+        bookRepository.save(book);
         
 
     }
+
+    public List<Book> getBookByTittle(String tittle){
+        return bookRepository.findByTitleExcludingBookPages(tittle);
+    }
+
 }
 
