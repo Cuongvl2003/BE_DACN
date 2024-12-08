@@ -9,6 +9,7 @@ import com.backend.book.Repository.BookRepository;
 import com.backend.book.Service.BookService;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
@@ -107,6 +108,20 @@ public class BookServiceImpl implements BookService {
 
     public List<Book> getBookByAuthor(String author){
         return bookRepository.findByAuthorExcludingBookPages(author);
+    }
+
+    public File getDownloadFile(String fileName){
+        if (fileName == null) {
+            throw new NullPointerException("fileName is null");
+        }
+        var fileToDownload = new File(STORAGE_DIRECTORY + File.separator + fileName);
+        if (!Objects.equals(fileToDownload.getParent(), STORAGE_DIRECTORY)) {
+            throw new SecurityException("Unsupported filename!");
+        }
+        // if (!fileToDownload.exists()) {
+        //     throw new FileNotFoundException("No file named: " + fileName);
+        // }
+        return fileToDownload;
     }
 
 }

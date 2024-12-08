@@ -1,5 +1,6 @@
 package com.backend.book.Service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,5 @@ public interface BookService {
     public void updateBookCover(String id, MultipartFile cover);
     public List<Book> getBookByTittle(String tittle);
     public List<Book> getBookByAuthor(String author);
+    public File getDownloadFile(String fileName);
 }

@@ -37,7 +37,7 @@ public class OcrController {
         this.ocrService = ocrService;
     }
     @PostMapping(value = "/addImage(testOCR)", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> getImageToString(@RequestParam MultipartFile multipartFile) throws TesseractException {
+    public ResponseEntity<String> getImageToString(@RequestParam("file") MultipartFile multipartFile) throws TesseractException {
         return new ResponseEntity<>(ocrService.getImageString(multipartFile), HttpStatus.OK);
     }
 

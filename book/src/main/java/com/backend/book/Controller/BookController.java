@@ -1,7 +1,11 @@
 package com.backend.book.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,6 +78,21 @@ public class BookController {
     @GetMapping("/getBookByAuthor/{author}")
     public List<Book> getBookByAuthor(@PathVariable String author) {
         return bookService.getBookByAuthor(author);
+    }
+
+     @GetMapping("/getBookCover")
+    public ResponseEntity<Resource> downloadFileFaster(@RequestParam("fileName") String filename) {
+        //log.log(Level.INFO, "[FASTER] Download with /download-faster");
+        try {
+            var fileToDownload = bookService.getDownloadFile(filename);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .contentLength(fileToDownload.length())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new FileSystemResource(fileToDownload));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
 
