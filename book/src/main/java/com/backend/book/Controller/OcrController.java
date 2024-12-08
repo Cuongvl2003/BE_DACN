@@ -76,11 +76,11 @@ public class OcrController {
                                 @RequestParam String description,
                                 @RequestParam String author,
                                 @RequestParam String publisher,
-                                @RequestParam String bookCover,
-                                @RequestParam Long totalPages,
-                                @RequestParam boolean isPremium,
+                                @RequestParam(required = false) String bookCover,
+                                @RequestParam(required = false) Long totalPages,
+                                @RequestParam(required = false) boolean isPremium,
                                 @RequestParam List<String> categories,
-                                @RequestParam String cloudUrl,
+                                @RequestParam(required = false) String cloudUrl,
                                 @RequestParam MultipartFile bookCoverReal,
                                 @RequestParam List<MultipartFile> page) throws TesseractException{
        // System.out.println("Request Content-Type: " + request.getContentType());
@@ -89,11 +89,11 @@ public class OcrController {
                 .description(description)
                 .author(author)
                 .publisher(publisher)
-                .bookCover(bookCover)
+                .bookCover("bookCover")
                 .totalPages(totalPages)
-                .isPremium(isPremium)
+                .isPremium(false)
                 .categories(categories)
-                .cloudUrl(cloudUrl)
+                .cloudUrl("cloudUrl")
                 .build();
         Book book2=bookService.saveBook(book);
         String id=book2.getBookId();

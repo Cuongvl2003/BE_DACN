@@ -105,5 +105,9 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findByTitleExcludingBookPages(tittle);
     }
 
+    public List<Book> getBookByAuthor(String author){
+        return bookRepository.findByAuthorExcludingBookPages(author);
+    }
+
 }
 

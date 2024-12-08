@@ -18,4 +18,7 @@ public interface BookRepository extends MongoRepository<Book, String> {
     
     @Query(value = "{ 'title': { $regex: ?0, $options: 'i' } }", fields = "{ 'bookPages': 0 }")
     List<Book> findByTitleExcludingBookPages(String title);
+
+    @Query(value = "{ 'author': { $regex: ?0, $options: 'i' } }", fields = "{ 'bookPages': 0 }")
+    List<Book> findByAuthorExcludingBookPages(String title);
 }
