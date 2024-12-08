@@ -88,7 +88,7 @@ public class BookController {
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
                     .contentLength(fileToDownload.length())
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .contentType(MediaType.IMAGE_PNG)
                     .body(new FileSystemResource(fileToDownload));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
