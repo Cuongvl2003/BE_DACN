@@ -70,13 +70,14 @@ public class OcrController {
     //         }
     //         return bookService.saveBook(book);
     //     }
-    @PostMapping(value = "/createBook{page}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Book updateBookPage(@RequestParam String title,
+
+    @PostMapping(value = "/createBook", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Book createBook(@RequestParam String title,
                                 @RequestParam String description,
                                 @RequestParam String author,
                                 @RequestParam String publisher,
                                 @RequestParam String bookCover,
-                                @RequestParam int totalPages,
+                                @RequestParam Long totalPages,
                                 @RequestParam boolean isPremium,
                                 @RequestParam List<String> categories,
                                 @RequestParam String cloudUrl,
@@ -97,7 +98,13 @@ public class OcrController {
         Book book2=bookService.saveBook(book);
         String id=book2.getBookId();
         bookService.updateBookCover(id, bookCoverReal);
+        return ocrService.createBook(id, page);
+    }   
+    
+    @PostMapping(value = "/updateBookPage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Book updateBookPage(@RequestParam String id,
+                                @RequestParam List<MultipartFile> page) throws TesseractException{
+       // System.out.println("Request Content-Type: " + request.getContentType());
         return ocrService.updateBookPage(id, page);
     }
-    
 }

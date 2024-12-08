@@ -63,7 +63,7 @@ public class OcrService {
 
     @Autowired BookRepository bookRepository;
 
-    public Book updateBookPage(String id, List<MultipartFile> multipartFile) throws TesseractException {
+    public Book createBook(String id, List<MultipartFile> multipartFile) throws TesseractException {
         //bookRepository.save(book1);
         Book book = bookRepository.findByBookId(id);
 
@@ -76,7 +76,6 @@ public class OcrService {
 
             System.out.println(page.getOriginalFilename());
             final String orginalFileName = StringUtils.cleanPath(page.getOriginalFilename());
-            System.out.println("2222");
             Path filePath = Paths.get(BASEURL+"\\"+orginalFileName);
             System.out.println(filePath);
             try{
@@ -89,8 +88,43 @@ public class OcrService {
             bookPages.put(count, orcToString);
             count++;
         }
-        System.out.println("test123");
-            book.setBookPages(bookPages);
+        book.setBookPages(bookPages);
+        count--;
+        book.setTotalPages(count);
+        System.out.println(book.getTotalPages()+"total page");
+        return bookRepository.save(book);
+    }
+
+    public Book updateBookPage(String id, List<MultipartFile> multipartFile) throws TesseractException {
+        //bookRepository.save(book1);
+        Book book = bookRepository.findByBookId(id);
+
+        Map<Long, String> bookPages = book.getBookPages();
+        if (bookPages == null) {
+            bookPages = new HashMap<>();
+        }
+        Long count=book.getTotalPages();
+        count++;
+        for (MultipartFile page: multipartFile){
+
+            System.out.println(page.getOriginalFilename());
+            final String orginalFileName = StringUtils.cleanPath(page.getOriginalFilename());
+            Path filePath = Paths.get(BASEURL+"\\"+orginalFileName);
+            System.out.println(filePath);
+            try{
+                this.saveFile(page);
+            }
+            catch (Exception e){};
+            final String orcToString = tesseract.doOCR(new File(String.valueOf(filePath)));
+            System.out.println(orcToString);
+
+            bookPages.put(count, orcToString);
+            count++;
+        }
+        book.setBookPages(bookPages);
+        count--;
+        book.setTotalPages(count);
+        System.out.println(book.getTotalPages()+"total page");
         return bookRepository.save(book);
     }
 

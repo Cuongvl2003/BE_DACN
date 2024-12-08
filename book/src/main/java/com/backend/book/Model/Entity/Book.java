@@ -28,7 +28,7 @@ public class Book {
     private String author;
     private String publisher;
     private String bookCover;
-    private int totalPages;
+    private Long totalPages;
     private boolean isPremium;
     private List<String> categories;
     private String cloudUrl;
