@@ -13,7 +13,7 @@ import com.backend.book.Model.DTO.PageUpdateRequest;
 import com.backend.book.Model.Entity.Book;
 import com.backend.book.Service.BookService;
 
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +34,7 @@ public class BookController {
     }
 
     @GetMapping("/getBookPage/{id}/pageNumber{pageNumber}")
-    public String getBookpage(@PathVariable String id, @PathVariable Long pageNumber) {
+    public HashMap<String, String> getBookpage(@PathVariable String id, @PathVariable Long pageNumber) {
         return bookService.getBookPage(id, pageNumber);
     }
 

@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -30,11 +31,13 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(id);
     }
 
-    public String getBookPage(String id, Long pageNumber){
+    public HashMap<String, String> getBookPage(String id, Long pageNumber){
         Book book=bookRepository.findByBookId(id);
         Map<Long, String> temp=book.getBookPages();
         String a=temp.get(pageNumber);
-        return a;
+        HashMap<String, String> returnData = new HashMap<String, String>();
+        returnData.put(book.getTitle(), a);
+        return returnData;
     }
 
     public Book saveBook(Book book) {
