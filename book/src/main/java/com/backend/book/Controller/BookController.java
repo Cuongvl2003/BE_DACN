@@ -86,7 +86,7 @@ public class BookController {
         try {
             var fileToDownload = bookService.getDownloadFile(filename);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + filename + "\"")
                     .contentLength(fileToDownload.length())
                     .contentType(MediaType.IMAGE_PNG)
                     .body(new FileSystemResource(fileToDownload));
